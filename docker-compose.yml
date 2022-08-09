@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  stream-service:
+    depends_on:
+      - mongodb
+    build: .
+    volumes:
+      - .:/usr/scr/app
+    ports:
+      - "3000:3000"
+    networks:
+      - nodeapp-network
+
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    networks:
+      - nodeapp-network
+    volumes:
+      - mongodata:/data/db
+
+volumes:
+  mongodata:
+
+networks:
+  nodeapp-network:
+    driver: bridge
